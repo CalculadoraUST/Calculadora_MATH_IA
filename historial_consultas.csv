@@ -1,0 +1,31 @@
+Fecha,Expresión,Tipo de operación,Resultado
+2025-06-06 16:51:04,Deriv x**2 + 3x,derivada,2*D*e*i*r*v*x + 3
+2025-06-06 16:51:30,Derivr x**2 + 3x,derivada,2*D*e*i*r**2*v*x + 3
+2025-06-06 16:51:44,Clcu  d  x**3 + 2x,derivada,3*C*c*d*l*u*x**2 + 2
+2025-06-06 17:05:00,calcula la derivada de x**3 + 2x,derivada,3*a**5*c**2*d**3*e**2*i*l**3*r*u*v*x**2 + 2
+2025-06-06 17:17:27,1* 2 1* 2 1* 2a  1* 2  1* 2 1* 2 1* 2 1* 2  1* 2 x**3 + 2x,derivada,1536*a*x**2 + 2
+2025-06-06 17:38:33,x**3 + 2*x,derivada,3*x**2 + 2
+2025-06-06 17:38:48,e**x * c*os(x),integral,"Piecewise((c*e**x*o*s*(x*log(e) - 1)/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-06 17:47:14,x**3 + 2*x,derivada,3*x**2 + 2
+2025-06-06 17:47:30,e**x * c*os (x),integral,"Piecewise((c*e**x*o*s*(x*log(e) - 1)/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-06 17:55:48,x**3 + 2*x,derivada,3*x**2 + 2
+2025-06-06 17:56:06,e**x * c*os (x),integral,"Piecewise((c*e**x*o*s*(x*log(e) - 1)/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-06 17:58:01,3*x/x,limite,3
+2025-06-06 17:58:18,(3*x)/x,limite,3
+2025-06-06 17:58:43,(3*x)/x**2,limite,oo
+2025-06-06 17:59:20,(3*x)/x**1/2,limite,3/2
+2025-06-06 18:00:02,(3*x)/(x**(1/2)),limite,0
+2025-06-06 18:00:27,(3*x)/(x**(1/2)),limite,3*sqrt(3)
+2025-06-06 18:01:13,3*x + 4*x**3,integral,x**2*(x**2 + 3/2)
+2025-06-06 18:55:43,e**x * c*os (x),integral,"Piecewise((c*e**x*o*s*(x*log(e) - 1)/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-06 18:56:16,e**x * ( c*os (x)),integral,"Piecewise((c*e**x*o*s*(x*log(e) - 1)/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-06 19:00:36,c*os (x),derivada,c*o*s
+2025-06-06 19:01:01,( c*os (x)),derivada,c*o*s
+2025-06-06 19:06:05,c*os (x),derivada,c*o*s
+2025-06-06 19:06:21,( c*os (x)),derivada,c*o*s
+2025-06-06 19:06:50,x**3/((x**4) + 2*x),derivada,x*(4 - x**3)/(x**3 + 2)**2
+2025-06-06 19:17:10,x**3,derivada,3*x**2
+2025-06-06 19:30:05,x**3,derivada,3*x**2
+2025-06-06 19:30:55,(x**3)/x,derivada,2*x
+2025-06-06 19:31:02,(x**3)/(x**2),derivada,1
+2025-06-06 19:31:30,(x**3)/((x**2)+3*x**4),derivada,(1 - 3*x**2)/(3*x**2 + 1)**2

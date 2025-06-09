@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MathIA",  // Nombre descriptivo
+            "type": "debugpy",              // Usa el debugger de Python
+            "request": "launch",            // Inicia un nuevo proceso
+            "program": "${workspaceFolder}/main.py",  // Ruta al archivo que se ejecutará
+            "console": "integratedTerminal", // Usa la terminal integrada de VS Code
+            "args": [],                     // Sin argumentos adicionales
+            "justMyCode": true              // Ignora código de librerías externas
+        }
+    ]
+}
