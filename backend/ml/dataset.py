@@ -1,38 +1,31 @@
-import json
 from torch.utils.data import Dataset
-from transformers import BertTokenizer
+from transformers import AutoTokenizer
+import json
 
 class SyntheticMathDataset(Dataset):
-    def __init__(self, file_path="backend/ml/data/synthetic_math_dataset.json", tokenizer_name='bert-base-uncased', max_length=128):
-        self.data = []
-        self.tokenizer = BertTokenizer.from_pretrained(tokenizer_name)
-        with open(file_path, 'r', encoding='utf-8') as f:
-            raw = json.load(f)
-            for doc in raw:
-                for page in doc["pages"]:
-                    for item in page["content"]:
-                        if item["type"] == "equation":
-                            # Puedes agregar aquí lógica para asignar etiquetas si las tienes
-                            self.data.append({
-                                "equation": item["value"],
-                                "format": item.get("format", ""),
-                                # "label": ... # Si tienes etiquetas, agrégalas aquí
-                            })
+    def __init__(self, file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        self.samples = [d for d in data if d.get("input") and d.get("output")]
+        self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+        self.label2id = {"derivada": 0, "integral": 1, "limite": 2}
 
     def __len__(self):
-        return len(self.data)
+        return len(self.samples)
 
     def __getitem__(self, idx):
-        equation = self.data[idx]["equation"]
-        # Si tienes etiquetas, descomenta la siguiente línea
-        # label = self.data[idx]["label"]
-        encoding = self.tokenizer(
-            equation,
-            padding='max_length',
+        item = self.samples[idx]
+        encoded = self.tokenizer(
+            item["input"],
+            padding="max_length",
             truncation=True,
-            max_length=128,
-            return_tensors='pt'
+            max_length=64,
+            return_tensors="pt"
         )
-        # Si tienes etiquetas, retorna también label
-        # return {**{k: v.squeeze(0) for k, v in encoding.items()}, "label": label}
-        return {k: v.squeeze(0) for k, v in encoding.items()}
+        return {
+            "input_ids": encoded["input_ids"].squeeze(0),
+            "attention_mask": encoded["attention_mask"].squeeze(0),
+            "label": self.label2id[item["output"]]
+        }

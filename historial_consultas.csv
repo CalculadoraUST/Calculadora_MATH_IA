@@ -29,3 +29,38 @@ Fecha,Expresión,Tipo de operación,Resultado
 2025-06-06 19:30:55,(x**3)/x,derivada,2*x
 2025-06-06 19:31:02,(x**3)/(x**2),derivada,1
 2025-06-06 19:31:30,(x**3)/((x**2)+3*x**4),derivada,(1 - 3*x**2)/(3*x**2 + 1)**2
+2025-06-09 21:14:01,x**3 + 2*x,derivada,3*x**2 + 2
+2025-06-09 21:15:03,(x**3) /(2*x+ x**4),derivada,x*(4 - x**3)/(x**3 + 2)**2
+2025-06-09 21:16:39,(x**3) /(2*x+ x**4),integral,log(x**3 + 2)/3
+2025-06-09 21:16:59,(x**3) /(2*x+ x**4),limite,0
+2025-06-09 21:18:13,(x-x**2) /(x**2- x**4),limite,oo
+2025-06-09 21:18:43,(x-(x**2)) /(x**2-( x**4)),limite,oo
+2025-06-09 21:19:13,((x**2)-x) /(x**2-x**4),limite,-oo
+2025-06-09 21:19:26,((x**2)-x) /(-x**2+x**4),limite,oo
+2025-06-09 21:19:39,((x**2)-x) /(-x**2+x**4),limite,1/6
+2025-06-11 01:59:09,(x**3)*(x**4+x**2+x),derivada,x**3*(7*x**3 + 5*x + 4)
+2025-06-11 02:30:50,(x**2-2*x)/(x**3-x**2+7*x),derivada,(-x**2 + 4*x + 5)/(x**4 - 2*x**3 + 15*x**2 - 14*x + 49)
+2025-06-11 02:47:58,(x**2+1)/(x**4+2*x),derivada,-2*x**5/(x**8 + 4*x**5 + 4*x**2) - 4*x**3/(x**8 + 4*x**5 + 4*x**2) + 2*x**2/(x**8 + 4*x**5 + 4*x**2) - 2/(x**8 + 4*x**5 + 4*x**2)
+2025-06-11 17:52:23,x**2,derivada,2*x
+2025-06-11 17:52:53,x**2/x**4+2*x,derivada,2 - 2/x**3
+2025-06-11 17:53:11,((x**2)/(x**4))+2*x,derivada,2 - 2/x**3
+2025-06-11 18:53:28,(x**3)*(x**3+x**(2/3)),derivada,11*x**(8/3)/3 + 6*x**5
+2025-06-15 20:19:00,e**x * c*os (x),integral,"Piecewise((c*e**x*o*s*x/log(e) - c*e**x*o*s/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-15 20:24:51,e**x * c*os (x),integral,"Piecewise((c*e**x*o*s*x/log(e) - c*e**x*o*s/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-15 20:31:29,e**x * c*os (x),integral,"Piecewise((c*e**x*o*s*x/log(e) - c*e**x*o*s/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-15 22:26:09,e**x * c*os (x),integral,"Piecewise((c*e**x*o*s*x/log(e) - c*e**x*o*s/log(e)**2, ((e >= 0) | (e > 1)) & ((e > 1) | (e < 1))), (c*o*s*x**2/2, True))"
+2025-06-15 22:43:50,e**x * cos(x),integral,"Piecewise((I*x*exp(-I*x)*sin(x)/2 + x*exp(-I*x)*cos(x)/2 + exp(-I*x)*sin(x)/2, Eq(e, exp(-I))), (-I*x*exp(I*x)*sin(x)/2 + x*exp(I*x)*cos(x)/2 + exp(I*x)*sin(x)/2, Eq(e, exp(I))), (e**x*log(e)*cos(x)/(log(e)**2 + 1) + e**x*sin(x)/(log(e)**2 + 1), True))"
+2025-06-16 00:01:07,e**x * cos(x),integral,"Piecewise(((I*x*sin(x) + x*cos(x) + sin(x))*exp(-I*x)/2, Eq(e, exp(-I))), ((-I*x*sin(x) + x*cos(x) + sin(x))*exp(I*x)/2, Eq(e, exp(I))), (e**x*(log(e)*cos(x) + sin(x))/(log(e)**2 + 1), True))"
+2025-06-16 00:13:44,e**x * cos(x),integral,\frac{\sqrt{2} e^{x} \sin{\left(x + \frac{\pi}{4} \right)}}{2}
+2025-06-16 00:25:15,e**x * cos(x),integral,\frac{\sqrt{2} e^{x} \sin{\left(x + \frac{\pi}{4} \right)}}{2}
+2025-06-16 01:01:41,e**x * cos(x),integral,\frac{\sqrt{2} e^{x} \sin{\left(x + \frac{\pi}{4} \right)}}{2}
+2025-06-16 01:34:56,x**3 + 2*x,derivada,3*x**2 + 2
+2025-06-16 01:35:16,sin(x)/x x 0,limite,
+2025-06-16 01:46:05,e**x * cos(x),integral,sqrt(2)*exp(x)*sin(x + pi/4)/2
+2025-06-16 01:54:18,e**x * cos(x),integral,sqrt(2)*exp(x)*sin(x + pi/4)/2
+2025-06-16 01:55:31,sin(x)/x x 0,limite,
+2025-06-16 02:01:26,sin(x)/x x 0,limite,0
+2025-06-17 01:30:31,x**3 + 2*x,derivada,3*x**2 + 2
+2025-06-17 01:31:06,e**x * cos(x),integral,sqrt(2)*exp(x)*sin(x + pi/4)/2
+2025-06-17 01:31:48,sin(x)/x x 0,limite,0
+2025-06-17 01:33:33,tan(x) + x**3/4,derivada,3*x**2/4 + cos(x)**(-2)

@@ -2,359 +2,383 @@ import sympy as sp
 from sympy.parsing.sympy_parser import (parse_expr, standard_transformations, 
                                        implicit_multiplication_application)
 from datetime import datetime
-from typing import Tuple, List, Dict, Optional
+from typing import Tuple, List, Dict, Optional, Union
 import numpy as np
 import matplotlib.pyplot as plt
 import io
 from PIL import Image
+import re
 
 class LimiteIA:
     def __init__(self):
         self.historial: List[Dict] = []
-        self.variable = 'x'  # Variable predeterminada
-        
+        self.variable_symbol: sp.Symbol = sp.symbols('x')
+        self.variable_str: str = 'x'
+
     def resolver(self, expresion: str, variable: str = 'x', 
                 punto: str = 'oo', direccion: str = '+') -> Tuple[str, str]:
-        """
-        Calcula el límite y genera explicación detallada en Markdown.
-        
-        Args:
-            expresion: Expresión matemática como string.
-            variable: Variable del límite (default: 'x').
-            punto: Punto hacia donde tiende (ej: '0', 'oo', 'pi/2').
-            direccion: '+' (derecha), '-' (izquierda) o '+-' (ambos).
-            
-        Returns:
-            Tuple: (resultado, explicación_markdown)
-        """
+        self.variable_str = variable
+        self.variable_symbol = sp.symbols(variable)
+        x = self.variable_symbol
+
         try:
-            self.variable = variable
-            x = sp.symbols(variable)
-            expr = self._parsear_expresion(expresion)
-            punto_sym = sp.sympify(punto)
-            
-            # Generar explicación paso a paso
+            if not expresion:
+                raise ValueError("La expresión no puede estar vacía.")
+            try:
+                expr = self._parsear_expresion(expresion)
+                if x not in expr.free_symbols and str(x) in expresion:
+                    raise ValueError(f"La variable '{variable}' no fue reconocida en la expresión.")
+                elif x not in expr.free_symbols and str(x) not in expresion:
+                    return str(expr), f"Límite de una constante o expresión sin la variable: el límite es {str(expr)}."
+            except Exception as e:
+                raise ValueError(f"Error al parsear la expresión: {e}")
+
+            try:
+                punto_sym = self._parsear_punto_limite(punto)
+            except Exception as e:
+                raise ValueError(f"Error al parsear el punto del límite '{punto}': {e}")
+
+            direccion = self._normalizar_direccion(direccion)
+            if direccion not in ['+', '-', '+-', '']:
+                raise ValueError(f"Dirección de límite inválida '{direccion}'. Use '+', '-', '+-', o ''.")
+
+            # 2. Generar explicación inicial
             pasos = [
-                f"## 🔍 Cálculo del límite: $\\lim_{{{variable} \\to {punto}^{{{direccion}}}}} {sp.latex(expr)}$",
-                "### 📚 **Paso 1: Identificación del tipo de límite**",
-                self._identificar_tipo(expr, punto_sym, direccion),
-                "### 🛠 **Paso 2: Técnicas aplicadas**",
-                self._aplicar_tecnicas(expr, x, punto_sym, direccion),
+                f"Ejercicio: Calcular el límite de {sp.sstr(expr)} cuando {variable} tiende a {str(punto_sym)}",
+                f"Paso 1: Identificación del tipo de límite y la función: {self._identificar_tipo(expr, punto_sym, direccion)}",
+                f"Paso 2: Evaluación inicial y técnicas aplicadas: {self._aplicar_tecnicas(expr, x, punto_sym, direccion)}"
             ]
             
-            # Calcular el límite
-            if direccion in ['+', '-']:
-                resultado = sp.limit(expr, x, punto_sym, dir=direccion)
-            else:
-                resultado = sp.limit(expr, x, punto_sym)
-                
-            # Verificar existencia del límite
+            # 3. Calcular el límite (y verificar existencia para dos lados)
             limite_existe = True
-            try:
-                if direccion == '+-':
+            if direccion == '+-':
+                try:
                     lim_der = sp.limit(expr, x, punto_sym, dir='+')
                     lim_izq = sp.limit(expr, x, punto_sym, dir='-')
                     if lim_der != lim_izq:
                         limite_existe = False
-                        resultado = f"∄ (Límites laterales diferentes: {lim_der} ≠ {lim_izq})"
-            except:
-                limite_existe = False
-                resultado = "∄ (No existe el límite)"
-            
-            # Construcción de la explicación final
-            pasos.extend([
-                "### ✅ **Resultado final**",
-                f"$$\\lim_{{{variable} \\to {punto}^{{{direccion}}}}} {sp.latex(expr)} = {sp.latex(resultado) if limite_existe else resultado}$$",
-                "---",
-                f"*📅 Operación registrada el {datetime.now().strftime('%Y-%m-%d %H:%M')}*"
-            ])
-            
-            self._guardar_historial(expresion, resultado, punto, direccion, limite_existe)
-            return str(resultado), "\n".join(pasos)
-            
+                        resultado = f"No existe (Límites laterales diferentes: {lim_der} ≠ {lim_izq})"
+                        resultado_simplificado = resultado
+                except Exception as e:
+                    limite_existe = False
+                    resultado = f"Error al calcular límites laterales: {e}"
+                    resultado_simplificado = resultado
+            else:
+                try:
+                    resultado = sp.limit(expr, x, punto_sym, dir=direccion if direccion != '' else 'real')
+                    resultado_simplificado = sp.simplify(resultado) if not isinstance(resultado, str) else resultado
+                except Exception as e:
+                    limite_existe = False
+                    resultado = f"Error al calcular el límite: {e}"
+                    resultado_simplificado = resultado
+
+            # 4. Análisis de Indeterminaciones y pasos intermedios
+            pasos_intermedios = self._analizar_indeterminacion(expr, x, punto_sym, resultado)
+            pasos_intermedios.extend(self._generar_pasos_intermedios_limite(expr, x, punto_sym, resultado))
+            pasos.extend(pasos_intermedios)
+
+            # 5. Construcción de la explicación final
+            if limite_existe and not isinstance(resultado_simplificado, str):
+                resultado_final_latex = f"$$\\lim_{{{variable} \\to {sp.latex(punto_sym)}}} {sp.latex(expr)} = {sp.latex(resultado_simplificado)}$$"
+                pasos.append("Resultado final (fórmula):")
+                pasos.append(resultado_final_latex)
+                final_result_str = str(resultado_simplificado)
+            else:
+                pasos.append("Resultado final:")
+                final_result_str = str(resultado)
+                pasos.append(final_result_str)
+
+            pasos.append(f"Fecha y hora: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+
+            self._guardar_historial(expresion, final_result_str, punto, direccion, limite_existe)
+            return final_result_str, "\n".join(pasos)
+
+        except ValueError as ve:
+            error_msg = f"❌ Error de entrada: {str(ve)}"
+            return "", error_msg
         except Exception as e:
-            error_msg = f"❌ **Error al calcular el límite**: {str(e)}"
+            error_msg = f"❌ Error interno al calcular límite: {str(e)}"
             return "", error_msg
 
     def _parsear_expresion(self, expresion: str) -> sp.Expr:
-        """Convierte string a expresión SymPy con transformaciones avanzadas."""
+        transformations = standard_transformations + (implicit_multiplication_application,)
         try:
-            # Intentar parsear como LaTeX
             return sp.parse_latex(expresion)
-        except:
-            # Usar parser estándar con transformaciones
-            transformations = standard_transformations + (implicit_multiplication_application,)
-            return parse_expr(expresion, transformations=transformations)
-
-    def _identificar_tipo(self, expr: sp.Expr, punto: sp.Expr, direccion: str) -> str:
-        """Analiza y describe el tipo de límite."""
-        componentes = []
-        
-        # Límites notables
-        if expr.has(sp.sin, sp.cos) and punto == 0:
-            componentes.append("**Límite trigonométrico notable**")
-        if expr.has(sp.exp) and (punto == sp.oo or punto == -sp.oo):
-            componentes.append("**Límite exponencial**")
-            
-        # Comportamiento en el punto
-        try:
-            eval_punto = expr.subs(sp.symbols(self.variable), punto)
-            if eval_punto.has(sp.zoo, sp.nan):
-                componentes.append("**Indeterminación** (requiere análisis especial)")
-            else:
-                componentes.append("Evaluación directa posible")
-        except:
-            componentes.append("Requiere técnicas avanzadas")
-            
-        # Direccionalidad
-        if direccion in ['+', '-']:
-            componentes.append(f"Límite lateral ({'derecha' if direccion == '+' else 'izquierda'})")
-            
-        return ", ".join(componentes)
-
-    def _identificar_tipo(self, expr: sp.Expr, punto: sp.Expr, direccion: str) -> str:
-        """Analiza y describe el tipo de límite con mayor detalle."""
-        componentes = []
-        x = sp.symbols(self.variable)
-        
-        # 1. Tipos especiales de límites
-        if expr.has(sp.sin, sp.cos) and punto == 0:
-            if expr.has(sp.sin(x)/x) or expr.has(x/sp.sin(x)):
-                componentes.append("**Límite trigonométrico fundamental**: sin(x)/x → 1 cuando x→0")
-            else:
-                componentes.append("**Límite trigonométrico notable**")
-        
-        if expr.has(sp.exp):
-            if punto == sp.oo:
-                componentes.append("**Límite exponencial en ∞**: eˣ → ∞")
-            elif punto == -sp.oo:
-                componentes.append("**Límite exponencial en -∞**: eˣ → 0")
-            elif punto == 0 and expr.has((sp.exp(x)-1)/x):
-                componentes.append("**Límite exponencial fundamental**: (eˣ-1)/x → 1 cuando x→0")
-        
-        # 2. Comportamiento en el punto
-        try:
-            eval_punto = expr.subs(x, punto)
-            if eval_punto.has(sp.zoo, sp.nan):
-                if expr.is_rational_function():
-                    num, den = expr.as_numer_denom()
-                    num_val = num.subs(x, punto)
-                    den_val = den.subs(x, punto)
-                    if num_val == 0 and den_val == 0:
-                        componentes.append("**Indeterminación 0/0**")
-                    elif num_val.is_infinite and den_val.is_infinite:
-                        componentes.append("**Indeterminación ∞/∞**")
-                    elif (num_val.is_nonzero and den_val == 0) or (num_val.is_infinite and den_val.is_finite):
-                        componentes.append("**Comportamiento asintótico** (puede ser ∞, -∞ o no existir)")
-                else:
-                    componentes.append("**Indeterminación** (requiere análisis especial)")
-            else:
-                componentes.append("**Evaluación directa posible**")
-        except:
-            componentes.append("**Requiere técnicas avanzadas**")
-        
-        # 3. Direccionalidad y continuidad
-        if direccion in ['+', '-']:
-            componente_dir = {
-                '+': "**Límite por la derecha**",
-                '-': "**Límite por la izquierda**"
-            }
-            componentes.append(componente_dir[direccion])
-            
-            # Verificar continuidad
+        except Exception:
             try:
-                lim = sp.limit(expr, x, punto, dir=direccion)
-                val = expr.subs(x, punto)
-                if lim == val:
-                    componentes.append(f"**Función continua** en {punto} por {direccion}")
-            except:
-                pass
-        
-        # 4. Comportamiento asintótico
-        if punto in [sp.oo, -sp.oo]:
-            componentes.append("**Comportamiento en el infinito**")
-        elif expr.has(sp.log(x)) and punto == 0:
-            componentes.append("**Comportamiento logarítmico en 0** (ln(x) → -∞)")
-        
-        return "### 📊 **Tipo de límite:**\n" + "\n".join(f"- {c}" for c in componentes)
+                return parse_expr(expresion, transformations=transformations, evaluate=False)
+            except Exception:
+                return parse_expr(expresion, transformations=standard_transformations, evaluate=False)
+
+    def _parsear_punto_limite(self, punto_str: str) -> sp.Expr:
+        punto_str_lower = punto_str.lower().strip()
+        if punto_str_lower in ['inf', 'infinity', 'oo']:
+            return sp.oo
+        elif punto_str_lower in ['-inf', '-infinity', '-oo']:
+            return -sp.oo
+        else:
+            try:
+                return sp.sympify(punto_str)
+            except Exception:
+                transformations = standard_transformations + (implicit_multiplication_application,)
+                return parse_expr(punto_str, transformations=transformations)
+
+    def _normalizar_direccion(self, direccion_str: str) -> str:
+        direccion_str_lower = direccion_str.lower().strip()
+        if direccion_str_lower in ['right', 'derecha', '+']:
+            return '+'
+        elif direccion_str_lower in ['left', 'izquierda', '-']:
+            return '-'
+        elif direccion_str_lower in ['both', 'doslados', '+-']:
+            return '+-'
+        elif direccion_str_lower == '':
+            return ''
+        else:
+            return direccion_str
+
+    def _identificar_tipo(self, expr: sp.Expr, punto: sp.Expr, direccion: str) -> str:
+        componentes = ["Función:"]
+        if expr.is_polynomial(self.variable_symbol):
+            componentes.append("Polinómica")
+        elif expr.is_rational_function(self.variable_symbol):
+            componentes.append("Racional")
+        elif expr.has(sp.sin, sp.cos, sp.tan, sp.asin, sp.acos, sp.atan):
+            componentes.append("Trigonométrica")
+        elif expr.has(sp.exp):
+            componentes.append("Exponencial")
+        elif expr.has(sp.log):
+            componentes.append("Logarítmica")
+        elif expr.has(sp.sqrt):
+            componentes.append("Con raíz")
+        elif expr.is_Pow and expr.base.has(self.variable_symbol):
+            componentes.append("Potencia")
+        elif expr.is_Add or expr.is_Mul:
+            if len(componentes) == 1:
+                componentes.append("Compuesta (combinación de funciones)")
+        if punto == sp.oo:
+            componentes.append(f"Límite cuando {self.variable_str} tiende a +infinito.")
+        elif punto == -sp.oo:
+            componentes.append(f"Límite cuando {self.variable_str} tiende a -infinito.")
+        elif punto.is_number:
+            componentes.append(f"Límite cuando {self.variable_str} tiende a un punto finito ({punto}).")
+        else:
+            componentes.append(f"Límite cuando {self.variable_str} tiende a un punto simbólico ({punto}).")
+        if direccion == '+':
+            componentes.append("Dirección: por la derecha.")
+        elif direccion == '-':
+            componentes.append("Dirección: por la izquierda.")
+        elif direccion == '+-':
+            componentes.append("Dirección: límites laterales.")
+        else:
+            componentes.append("Dirección: bilateral (por ambos lados).")
+        return " | ".join(componentes)
 
     def _aplicar_tecnicas(self, expr: sp.Expr, x: sp.Symbol, 
                         punto: sp.Expr, direccion: str) -> str:
-        """Explica las técnicas para resolver el límite con más detalle."""
         tecnicas = []
-        
-        # 1. Evaluación directa
         try:
-            eval_punto = expr.subs(x, punto)
-            if not eval_punto.has(sp.zoo, sp.nan):
-                tecnicas.append(
-                    f"**Evaluación directa**:\n"
-                    f"Sustituir ${sp.latex(x)} = {sp.latex(punto)}$\n"
-                    f"Resultado: ${sp.latex(eval_punto)}$"
-                )
-                return "### 🛠 **Técnicas aplicadas:**\n" + "\n".join(f"- {t}" for t in tecnicas)
-        except:
-            pass
-            
-        # 2. Indeterminaciones
-        if expr.is_rational_function():
-            num, den = expr.as_numer_denom()
+            eval_at_point = expr.subs(x, punto)
+            if not eval_at_point.is_finite and not eval_at_point.is_infinite and not eval_at_point.has(sp.nan):
+                tecnicas.append("Sustitución directa: Si la función es continua en el punto, el límite es f(punto).")
+            elif eval_at_point.is_finite or eval_at_point.is_infinite:
+                tecnicas.append("Evaluación directa: Se intenta sustituir el punto en la expresión.")
+        except Exception:
+            tecnicas.append("Evaluación en el punto: Se intenta sustituir el valor del punto.")
+        if expr.is_rational_function(x) and (punto.is_number or punto in [sp.oo, -sp.oo]):
+            tecnicas.append("Para funciones racionales: comparar grados del numerador y denominador (para límites en infinito) o factorización/L'Hôpital (para indeterminaciones finitas).")
+        if expr.has(sp.sin, sp.cos, sp.tan, sp.asin, sp.acos, sp.atan) and punto.is_number:
+            tecnicas.append("Para funciones trigonométricas: usar identidades trigonométricas o límites notables.")
+        if expr.has(sp.exp, sp.log):
+            tecnicas.append("Para funciones exponenciales/logarítmicas: considerar propiedades de logaritmos/exponentes, cambio de base, o L'Hôpital.")
+        if punto in [sp.oo, -sp.oo]:
+            if expr.is_polynomial(x):
+                tecnicas.append(f"Para polinomios en infinito: el límite está determinado por el término de mayor grado de {x}.")
+            elif expr.is_rational_function(x):
+                tecnicas.append(f"Para funciones racionales en infinito: comparar el grado más alto de {x} en el numerador y denominador.")
+            tecnicas.append("Comparación de crecimientos de funciones comunes (polinómicas, exponenciales, logarítmicas).")
+        if expr.has(sp.Abs):
+            tecnicas.append("Para valor absoluto: considerar los límites laterales para analizar el comportamiento cerca del punto crítico.")
+        tecnicas.append("Regla de L'Hôpital: aplicable a indeterminaciones del tipo 0/0 o infinito/infinito. Consiste en derivar el numerador y denominador y tomar el límite de la nueva fracción.")
+        tecnicas.append("Cambio de variable: útil para simplificar la expresión o el punto del límite.")
+        tecnicas.append("Expansión en series de Taylor/Maclaurin: puede ser útil para evaluar límites en un punto finito, especialmente cuando hay indeterminaciones.")
+        tecnicas.append("Límites notables: reconocer y aplicar límites estándar conocidos (ej: lim x→0 sin(x)/x = 1).")
+        return "; ".join(tecnicas)
+
+    def _analizar_indeterminacion(self, expr: sp.Expr, x: sp.Symbol, punto_sym: sp.Expr, resultado_sympy: sp.Expr) -> List[str]:
+        pasos_ind = ["Análisis de indeterminaciones (si aplica):"]
+        try:
+            eval_subs = expr.subs(x, punto_sym)
+            if eval_subs.has(sp.nan, sp.zoo) or not eval_subs.is_finite and not eval_subs.is_infinite:
+                pasos_ind.append("Se detecta una forma indeterminada en la evaluación directa.")
+                num, den = expr.as_numer_denom()
+                try:
+                    num_val = num.subs(x, punto_sym)
+                    den_val = den.subs(x, punto_sym)
+                    if (num_val == 0 and den_val == 0) or (num_val.is_infinite and den_val.is_infinite):
+                        pasos_ind.append(f"Forma indeterminada: {num_val}/{den_val}. Considerar la Regla de L'Hôpital.")
+                        if not isinstance(resultado_sympy, str) and (resultado_sympy.is_finite or resultado_sympy.is_infinite):
+                            pasos_ind.append("SymPy aplicó técnicas (posiblemente L'Hôpital u otras) internamente para encontrar el resultado.")
+                    elif num_val == 0 and den_val.is_infinite:
+                        pasos_ind.append(f"Forma indeterminada: 0 * infinito. Puede requerir reescribir la expresión (ej: a 0/0 o infinito/infinito) para aplicar L'Hôpital o usar otras simplificaciones.")
+                    elif num_val.is_infinite and den_val == 0:
+                        pasos_ind.append(f"Forma indeterminada: infinito/0 o -infinito/0. Esto suele resultar en ±infinito. Analizar el signo del denominador cerca del punto.")
+                    else:
+                        pasos_ind.append("Indeterminación detectada, pero el tipo específico requeriría un análisis más profundo.")
+                except Exception:
+                    pasos_ind.append("No se pudo evaluar el numerador/denominador en el punto para identificar la forma indeterminada exacta.")
+        except Exception:
+            pasos_ind.append("No se pudo realizar un análisis detallado de la indeterminación.")
+        if len(pasos_ind) == 1 and not isinstance(resultado_sympy, str) and (resultado_sympy.is_finite or resultado_sympy.is_infinite):
+            pasos_ind.append("La evaluación directa parece no producir una forma indeterminada principal.")
+        return pasos_ind if len(pasos_ind) > 1 else []
+
+    def _generar_pasos_intermedios_limite(self, expr: sp.Expr, x: sp.Symbol, punto: sp.Expr, resultado: sp.Expr) -> list:
+        pasos = []
+        try:
+            valor_sust = expr.subs(x, punto)
+            if valor_sust.is_finite:
+                pasos.append(f"Sustitución directa: Al evaluar en el punto, se obtiene {str(valor_sust)}.")
+            elif valor_sust.has(sp.nan, sp.zoo):
+                pasos.append("Sustitución directa: Se obtiene una forma indeterminada.")
+        except Exception:
+            pasos.append("Sustitución directa: No se pudo evaluar la expresión en el punto.")
+        num, den = expr.as_numer_denom()
+        try:
             num_val = num.subs(x, punto)
             den_val = den.subs(x, punto)
-            
             if num_val == 0 and den_val == 0:
-                tecnicas.append("**Indeterminación 0/0**:")
-                tecnicas.append("  - **Factorización**: Buscar términos comunes")
-                tecnicas.append("  - **Regla de L'Hôpital**: Derivar numerador y denominador")
-                tecnicas.append("  - **Expansión en series de Taylor**: Para funciones trascendentes")
-                
+                pasos.append("Forma indeterminada: 0/0, se puede aplicar la Regla de L'Hôpital o simplificar.")
             elif num_val.is_infinite and den_val.is_infinite:
-                tecnicas.append("**Indeterminación ∞/∞**:")
-                tecnicas.append("  - **Dividir por la mayor potencia**: Para funciones racionales en ∞")
-                tecnicas.append("  - **Regla de L'Hôpital**: Derivar numerador y denominador")
-                tecnicas.append("  - **Comparación de infinitos**: Analizar órdenes de crecimiento")
-        
-        # 3. Técnicas trigonométricas
-        if expr.has(sp.sin, sp.cos, sp.tan):
-            tecnicas.append("**Técnicas trigonométricas**:")
-            tecnicas.append("  - **Identidades trigonométricas**: sin²x + cos²x = 1, etc.")
-            tecnicas.append("  - **Límites notables**:")
-            tecnicas.append("    - $\lim_{x→0}\\frac{\\sin x}{x} = 1$")
-            tecnicas.append("    - $\lim_{x→0}\\frac{1-\\cos x}{x} = 0$")
-            tecnicas.append("  - **Sustitución trigonométrica**: Para expresiones con √(a²±x²)")
-        
-        # 4. Límites en infinito
-        if punto in [sp.oo, -sp.oo]:
-            tecnicas.append("**Técnicas para límites en ∞**:")
-            tecnicas.append("  - **Comparación de términos dominantes**:")
-            tecnicas.append("    - Exponencial > Polinomial > Logarítmico")
-            tecnicas.append("  - **Factorización del término dominante**:")
-            tecnicas.append("  - **Uso de órdenes de crecimiento**:")
-            tecnicas.append("    - $e^x > x^n > \ln x$ cuando x→∞")
-        
-        # 5. Técnicas exponenciales y logarítmicas
-        if expr.has(sp.exp):
-            tecnicas.append("**Técnicas exponenciales**:")
-            tecnicas.append("  - $\lim_{x→0}\\frac{e^x-1}{x} = 1$")
-            tecnicas.append("  - Para formas 1^∞: Usar $\\lim f(x)^{g(x)} = e^{\\lim (f(x)-1)g(x)}$")
-        
-        if expr.has(sp.log):
-            tecnicas.append("**Técnicas logarítmicas**:")
-            tecnicas.append("  - $\lim_{x→0^+} \ln x = -∞$")
-            tecnicas.append("  - $\lim_{x→∞} \\frac{\ln x}{x^n} = 0$ (n > 0)")
-        
-        # 6. Sustitución de variables
-        tecnicas.append("**Técnicas generales**:")
-        tecnicas.append("  - **Sustitución de variable**: y = 1/x para límites en ∞")
-        tecnicas.append("  - **Expansión en series**: Para funciones complejas cerca del punto")
-        
-        return "### 🛠 **Técnicas aplicables:**\n" + "\n".join(f"- {t}" for t in tecnicas) if tecnicas else "**Análisis directo** o combinación de técnicas"
+                pasos.append("Forma indeterminada: infinito/infinito, se puede aplicar la Regla de L'Hôpital o simplificar.")
+        except Exception:
+            pass
+        if expr.has(sp.sin, sp.cos, sp.tan) and punto == 0:
+            if expr == sp.sin(x)/x:
+                pasos.append("Límite notable: lim x→0 sin(x)/x = 1.")
+        if not pasos:
+            pasos.append("SymPy ha calculado el límite. La generación de pasos intermedios detallados para esta forma de expresión es compleja y no está implementada genéricamente en este momento.")
+        return pasos
 
-    def _guardar_historial(self, expresion: str, resultado: sp.Expr, 
-                          punto: str, direccion: str, existe: bool):
-        """Registra la operación en el historial."""
+    def _guardar_historial(self, expresion: str, resultado_str: str,
+                          punto_str: str, direccion_str: str, existe: bool):
         self.historial.append({
             'fecha': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             'expresion': expresion,
-            'resultado': str(resultado),
-            'latex_resultado': sp.latex(resultado) if existe else resultado,
-            'punto': punto,
-            'direccion': direccion,
+            'resultado': resultado_str,
+            'punto': punto_str,
+            'direccion': direccion_str,
             'existe': existe,
-            'variable': self.variable
+            'variable': self.variable_str
         })
 
     def mostrar_historial(self, formato: str = 'markdown') -> str:
-        """Devuelve el historial en diferentes formatos."""
         if not self.historial:
-            return "📜 El historial está vacío."
-            
+            return "El historial está vacío."
         if formato == 'markdown':
             return self._historial_markdown()
-        elif formato == 'latex':
-            return self._historial_latex()
         else:
             return str(self.historial)
 
     def _historial_markdown(self) -> str:
-        """Formatea el historial como tabla Markdown."""
         tabla = [
             "| Fecha | Expresión | Límite | Punto | Dirección | ¿Existe? |",
             "|-------|-----------|--------|-------|-----------|----------|"
         ]
         for item in self.historial:
+            expr_display = item['expresion'].replace('|', '\\|')
+            res_display = item['resultado'].replace('|', '\\|')
             tabla.append(
-                f"| {item['fecha']} | `{item['expresion']}` "
-                f"| `{item['resultado']}` | {item['punto']} "
+                f"| {item['fecha']} | `{expr_display}` "
+                f"| `{res_display}` | {item['punto']} "
                 f"| {item['direccion']} | {'Sí' if item['existe'] else 'No'} |"
             )
         return "\n".join(tabla)
 
-    def _historial_latex(self) -> str:
-        """Formatea el historial para LaTeX."""
-        items = []
-        for item in self.historial:
-            items.append(
-                f"\\item {item['fecha']}: "
-                f"$\\lim_{{{item['variable']} \\to {item['punto']}^{{{item['direccion']}}}}} "
-                f"{sp.latex(sp.sympify(item['expresion']))} = "
-                f"{item['latex_resultado']}$"
-                f" ({'Existe' if item['existe'] else 'No existe'})"
-            )
-            
-        return "\\begin{itemize}\n" + "\n".join(items) + "\n\\end{itemize}"
-
     def graficar_limite(self, expr_str: str,
                     punto: str = 'oo',
                     rango: Tuple[float, float] = (-5, 5)) -> Optional[Image.Image]:
-        """
-        Grafica el comportamiento de la función cerca del punto del límite.
-        """
         try:
             expr = self._parsear_expresion(expr_str)
-
-            # Validar una sola variable
             variables = list(expr.free_symbols)
             if len(variables) != 1:
                 raise ValueError("La gráfica solo puede generarse para funciones con una sola variable.")
-
             x = variables[0]
-            self.variable = str(x)
+            self.variable_str = str(x)
             f = sp.lambdify(x, expr, 'numpy')
-
-            # Rango según el punto
-            if punto == 'oo':
-                x_vals = np.linspace(10, 100, 400)
-            elif punto == '-oo':
-                x_vals = np.linspace(-100, -10, 400)
+            punto_sym = self._parsear_punto_limite(punto)
+            if punto_sym == sp.oo:
+                plot_range = (10, 100) if rango[1] <= 10 else (max(10, rango[0]), rango[1])
+                x_vals = np.linspace(plot_range[0], plot_range[1], 400)
+            elif punto_sym == -sp.oo:
+                plot_range = (-100, -10) if rango[0] >= -10 else (rango[0], min(-10, rango[1]))
+                x_vals = np.linspace(plot_range[0], plot_range[1], 400)
             else:
-                p = float(sp.sympify(punto).evalf())
-                radio = min(abs(rango[1] - p), abs(p - rango[0])) / 2
-                x_vals = np.linspace(p - radio, p + radio, 400)
-
-            y_vals = f(x_vals)
-
+                try:
+                    p = float(sp.N(punto_sym))
+                    delta = min(abs(rango[1] - p), abs(p - rango[0])) / 2.0
+                    if delta == 0:
+                        delta = (rango[1] - rango[0]) / 10.0
+                    plot_start = max(rango[0], p - delta)
+                    plot_end = min(rango[1], p + delta)
+                    if plot_end - plot_start < (rango[1] - rango[0]) / 100:
+                        mid = (plot_start + plot_end) / 2
+                        plot_start = max(rango[0], mid - (rango[1] - rango[0]) / 50)
+                        plot_end = min(rango[1], mid + (rango[1] - rango[0]) / 50)
+                    if plot_start >= plot_end:
+                        plot_start = rango[0]
+                        plot_end = rango[1]
+                    x_vals = np.linspace(plot_start, plot_end, 400)
+                except Exception:
+                    x_vals = np.linspace(rango[0], rango[1], 400)
+                    p = None
+            try:
+                if punto_sym.is_number and 'p' in locals() and p is not None:
+                    if not expr.is_polynomial(x) and not expr.is_Piecewise:
+                        tolerance = (x_vals[-1] - x_vals[0]) / 1000
+                        mask = np.abs(x_vals - p) > tolerance
+                        x_vals_plot = x_vals[mask]
+                        y_vals = f(x_vals_plot)
+                    else:
+                        x_vals_plot = x_vals
+                        y_vals = f(x_vals_plot)
+                else:
+                    x_vals_plot = x_vals
+                    y_vals = f(x_vals_plot)
+            except Exception as eval_error:
+                with np.errstate(all='ignore'):
+                    y_vals = f(x_vals)
+                    y_vals[np.isinf(y_vals) | np.isnan(y_vals)] = np.nan
+                x_vals_plot = x_vals
             plt.figure(figsize=(10, 6))
-            plt.plot(x_vals, y_vals, label=f"f({x}) = {sp.latex(expr)}")
-            if punto not in ['oo', '-oo']:
-                p = float(sp.sympify(punto).evalf())
-                plt.axvline(x=p, color='r', linestyle='--', alpha=0.5, label=f"{x} → {punto}")
-
-            plt.title(f"Comportamiento cerca de {x} → {punto}")
+            plt.plot(x_vals_plot, y_vals, label=f"f({x})")
+            if punto_sym.is_number and 'p' in locals() and p is not None:
+                if plot_start <= p <= plot_end:
+                    plt.axvline(x=p, color='r', linestyle='--', alpha=0.5, label=f"{self.variable_str} → {str(punto_sym)}")
+            plt.title(f"Comportamiento de f({self.variable_str}) cerca de {self.variable_str} → {str(punto_sym)}")
+            plt.xlabel(self.variable_str)
+            plt.ylabel(f"f({self.variable_str})")
             plt.grid(True)
             plt.legend()
-
+            finite_y_vals = y_vals[np.isfinite(y_vals)]
+            if len(finite_y_vals) > 1:
+                y_min, y_max = np.min(finite_y_vals), np.max(finite_y_vals)
+                y_range = y_max - y_min
+                if y_range > 0:
+                    plt.ylim(y_min - y_range * 0.1, y_max + y_range * 0.1)
+                else:
+                    plt.ylim(y_min - 1, y_max + 1)
+            elif len(finite_y_vals) == 1:
+                plt.ylim(finite_y_vals[0] - 1, finite_y_vals[0] + 1)
             buf = io.BytesIO()
             plt.savefig(buf, format='png')
             plt.close()
             buf.seek(0)
             return Image.open(buf)
-
         except Exception as e:
-            print(f"❌ Error al graficar límite: {str(e)}")
+            print(f"Error al graficar: {str(e)}")
+            plt.close('all')
             return None
 
-
     def limpiar_historial(self):
-        """Reinicia el historial de operaciones."""
         self.historial = []
+        print("Historial de límites limpiado.")

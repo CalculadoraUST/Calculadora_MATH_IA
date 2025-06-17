@@ -3,6 +3,7 @@ from backend.nlp_processor import NLPProcessor
 from backend.derivador import DerivadorIA
 from backend.limite import LimiteIA
 from backend.integrador import IntegradorIA
+from backend.ml.dataset_builder import agregar_a_dataset
 import sympy as sp
 from sympy.parsing.sympy_parser import parse_expr, standard_transformations, implicit_multiplication_application
 from collections import Counter
@@ -10,6 +11,7 @@ import PIL.Image
 import csv
 import os
 from datetime import datetime
+import json
 
 class MathAIChatbot:
     def __init__(self):
@@ -24,6 +26,7 @@ class MathAIChatbot:
         self.last_plot_image = None
         self.historial_csv = "historial_consultas.csv"
         self._crear_csv_si_no_existe()
+        self.referencias_path = "backend/ml/data/referencias.json"
 
     def _crear_csv_si_no_existe(self):
         if not os.path.exists(self.historial_csv):
@@ -58,6 +61,20 @@ class MathAIChatbot:
             [f"- `{expr}` ({count} veces)" for expr, count in top]
         )
 
+    def buscar_referencias(self, pasos_texto: str) -> str:
+        if not os.path.exists(self.referencias_path):
+            return ""
+        with open(self.referencias_path, "r", encoding="utf-8") as f:
+            referencias = json.load(f)
+
+        resultado = []
+        for clave in referencias:
+            if clave.lower() in pasos_texto.lower():
+                refs = referencias[clave]
+                resultado.append(f"🔎 **Referencia para '{clave}':**\n" + "\n".join(f"- {r}" for r in refs))
+
+        return "\n\n".join(resultado)
+
     def solve_problem(self, text: str, history=None):
         if history is None:
             history = []
@@ -68,6 +85,12 @@ class MathAIChatbot:
             expr = operation_details["expression"]
             expr = self.preprocess_expression(expr)
             params = operation_details.get("params", {})
+
+             # --- PRINTS DE DEPURACIÓN ---
+            print("Texto original recibido:", text)
+            print("Expresión después de NLPProcessor:", operation_details["expression"])
+            print("Expresión después de preprocess_expression:", expr)
+            print("Parámetros detectados:", params)
 
             if op_type not in self.solvers:
                 raise ValueError("No se pudo clasificar la operación solicitada. Intenta usar palabras clave como 'deriva', 'límite' o 'integra'.")
@@ -103,10 +126,13 @@ class MathAIChatbot:
             self.usage_counter[expr] += 1
             self._guardar_en_historial_csv(expr, op_type, str(result))
 
+            referencias = self.buscar_referencias(steps)
+
             response = (
                 f"🔎 **Problema clasificado como**: {op_type.upper()}\n\n"
                 f"📝 **Expresión**: `{expr}`\n\n"
                 f"📚 **Pasos de solución**:\n{steps}\n\n"
+                f"{referencias}\n\n"
                 f"✅ **Resultado final**: `{result}`"
             )
 
@@ -141,6 +167,10 @@ class MathAIChatbot:
 
             image_output = gr.Image(label="📈 Gráfica generada")
 
+            with gr.Row():
+                file_input = gr.File(label="📁 Sube PDF con ejercicios", file_types=[".pdf"])
+                upload_btn = gr.Button("Agregar al dataset")
+
             with gr.Accordion("📚 Ver bibliografía recomendada", open=False):
                 gr.Markdown("""
                 ### Bibliografía recomendada:
@@ -164,13 +194,18 @@ class MathAIChatbot:
                 top_queries_output.value = self.get_top_queries_markdown()
                 return updated_chat, self.last_plot_image
 
+            def wrapped_file_upload(file):
+                return agregar_a_dataset(file.name)
+
             submit_btn.click(fn=wrapped_solver, inputs=[input_text, chatbot], outputs=[chatbot, image_output])
             clear_btn.click(fn=lambda: ([], None), inputs=None, outputs=[chatbot, image_output], queue=False)
             input_text.submit(fn=wrapped_solver, inputs=[input_text, chatbot], outputs=[chatbot, image_output])
+
+            upload_btn.click(fn=wrapped_file_upload, inputs=file_input, outputs=None)
 
         return app
 
 if __name__ == "__main__":
     chatbot = MathAIChatbot()
     app = chatbot.launch_interface()
-    app.launch(server_port=7861, share=True)
+    app.launch(server_port=8502, share=True)

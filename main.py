@@ -6,5 +6,5 @@ if __name__ == "__main__":
     app.launch(
         server_name="localhost",
         server_port=8502,
-        share=False  # Cambiar a True para generar URL pública
+        share=True  # Cambiar a True para generar URL pública
     )

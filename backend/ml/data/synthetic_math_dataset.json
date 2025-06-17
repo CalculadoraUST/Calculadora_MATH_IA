@@ -1,425 +1,933 @@
 [
-    {
-        "fileName": "Compendio_02_Mates_2_Limites_y_Continuidad.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T10:03:33.292Z"
-        }
-    },
-    {
-        "fileName": "Compendio_02_Mates_2_Limites_y_Continuidad.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T10:04:30.722Z"
-        }
-    },
-    {
-        "fileName": "2024_Mates_2_C_tedra_3_con_respuestas.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T09:59:12.217Z"
-        }
-    },
-    {
-        "fileName": "Compendio_03_Derivadas__Tangentes_y_L_Hopital_.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T10:05:25.057Z"
-        }
-    },
-    {
-        "fileName": "2024_Mates_2_Control_2_Limites_Continuidad_Derivadas_Tangentes.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T10:02:55.542Z"
-        }
-    },
-    {
-        "fileName": "Resp_2024_Mates_2_C_tedra_1_res.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T10:05:16.475Z"
-        }
-    },
-    {
-        "fileName": "Compendio_06_Mates_2_Integrales_Indefinidas_Parte_1_2.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T10:05:02.531Z"
-        }
-    },
-    {
-        "fileName": "2024_mates_2_Compendio__07.02_Integrales_definidas___reas_y_vol_menes_6_.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T10:03:19.003Z"
-        }
-    },
-    {
-        "fileName": "2024_Mates_2_Examen_con_respuestas__Copy_.pdf",
-        "pages": [
-            {
-                "pageNumber": 1,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "This is a sample text extracted from the PDF."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "E = mc^2",
-                        "format": "LaTeX"
-                    },
-                    {
-                        "type": "text",
-                        "value": "Followed by more text content."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\int_{a}^{b} x^2 dx",
-                        "format": "LaTeX"
-                    }
-                ]
-            },
-            {
-                "pageNumber": 2,
-                "content": [
-                    {
-                        "type": "text",
-                        "value": "Second page content with more equations."
-                    },
-                    {
-                        "type": "equation",
-                        "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
-                        "format": "LaTeX"
-                    }
-                ]
-            }
-        ],
-        "metadata": {
-            "totalPages": 2,
-            "equationsCount": 3,
-            "processedAt": "2025-06-04T10:04:10.499Z"
-        }
+  {
+    "fileName": "Compendio_02_Mates_2_Limites_y_Continuidad.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T10:03:33.292Z"
     }
+  },
+  {
+    "fileName": "Compendio_02_Mates_2_Limites_y_Continuidad.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T10:04:30.722Z"
+    }
+  },
+  {
+    "fileName": "2024_Mates_2_C_tedra_3_con_respuestas.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T09:59:12.217Z"
+    }
+  },
+  {
+    "fileName": "Compendio_03_Derivadas__Tangentes_y_L_Hopital_.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T10:05:25.057Z"
+    }
+  },
+  {
+    "fileName": "2024_Mates_2_Control_2_Limites_Continuidad_Derivadas_Tangentes.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T10:02:55.542Z"
+    }
+  },
+  {
+    "fileName": "Resp_2024_Mates_2_C_tedra_1_res.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T10:05:16.475Z"
+    }
+  },
+  {
+    "fileName": "Compendio_06_Mates_2_Integrales_Indefinidas_Parte_1_2.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T10:05:02.531Z"
+    }
+  },
+  {
+    "fileName": "2024_mates_2_Compendio__07.02_Integrales_definidas___reas_y_vol_menes_6_.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T10:03:19.003Z"
+    }
+  },
+  {
+    "fileName": "2024_Mates_2_Examen_con_respuestas__Copy_.pdf",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "content": [
+          {
+            "type": "text",
+            "value": "This is a sample text extracted from the PDF."
+          },
+          {
+            "type": "equation",
+            "value": "E = mc^2",
+            "format": "LaTeX"
+          },
+          {
+            "type": "text",
+            "value": "Followed by more text content."
+          },
+          {
+            "type": "equation",
+            "value": "\\int_{a}^{b} x^2 dx",
+            "format": "LaTeX"
+          }
+        ]
+      },
+      {
+        "pageNumber": 2,
+        "content": [
+          {
+            "type": "text",
+            "value": "Second page content with more equations."
+          },
+          {
+            "type": "equation",
+            "value": "\\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}",
+            "format": "LaTeX"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "totalPages": 2,
+      "equationsCount": 3,
+      "processedAt": "2025-06-04T10:04:10.499Z"
+    }
+  },
+  {
+    "input": "Control # 2 - Matemáticas 2",
+    "output": ""
+  },
+  {
+    "input": "Profesores:",
+    "output": ""
+  },
+  {
+    "input": "Geir Da Silva",
+    "output": ""
+  },
+  {
+    "input": "Otoño 2024",
+    "output": ""
+  },
+  {
+    "input": "Indicaciones",
+    "output": ""
+  },
+  {
+    "input": "• Ingrese sus datos personales en todas las hojas.",
+    "output": ""
+  },
+  {
+    "input": "• Esta evaluación está diseñada para ser respondida en XX minutos y consta de pregun-",
+    "output": ""
+  },
+  {
+    "input": "tas de desarrollo.",
+    "output": ""
+  },
+  {
+    "input": "• Utilice sólo lápiz pasta. Si utiliza lápiz a mina pierde el derecho a re-corrección, las",
+    "output": ""
+  },
+  {
+    "input": "que pueden alterar el puntaje ya sea aumentándolo o reduciéndolo.",
+    "output": ""
+  },
+  {
+    "input": "• Todas las respuestas deben ser justificadas paso a paso. Preguntas incompletas o sin",
+    "output": ""
+  },
+  {
+    "input": "justificación serán evaluadas con menor puntaje.",
+    "output": ""
+  },
+  {
+    "input": "• Todos los dispositivos electrónicos (teléfono celular, Tablet, reloj inteligente, airpods,",
+    "output": ""
+  },
+  {
+    "input": "audífonos, etc.) deben estar apagados y guardados en su mochila.",
+    "output": ""
+  },
+  {
+    "input": "• Se considerará una actitud deshonesta ser sorprendido mirando la evaluación de otra",
+    "output": ""
+  },
+  {
+    "input": "persona, interactuando con otra persona (conversando, gesticulando, etc.) o en pose-",
+    "output": ""
+  },
+  {
+    "input": "sión de una fuente de información no autorizada",
+    "output": ""
+  },
+  {
+    "input": "• Este Control es SIN CALCULADORA de ningún tipo.",
+    "output": ""
+  },
+  {
+    "input": "• los Puntos Extra, si es que los hay, no son traspasables a otras evaluaciones.",
+    "output": ""
+  },
+  {
+    "input": "Nombre Completo:",
+    "output": ""
+  },
+  {
+    "input": "Rut:",
+    "output": ""
+  },
+  {
+    "input": "Tener Presente: Todo acto realizado por un estudiante durante una evaluación, tendiente",
+    "output": ""
+  },
+  {
+    "input": "a viciarla, será sancionado con la suspensión inmediata de la actividad evaluativa y con la",
+    "output": ""
+  },
+  {
+    "input": "calificación mínima (1.0) en ella.",
+    "output": ""
+  },
+  {
+    "input": "Firma:",
+    "output": ""
+  },
+  {
+    "input": "Pregunta",
+    "output": ""
+  },
+  {
+    "input": "1",
+    "output": ""
+  },
+  {
+    "input": "2",
+    "output": ""
+  },
+  {
+    "input": "3",
+    "output": ""
+  },
+  {
+    "input": "Total",
+    "output": ""
+  },
+  {
+    "input": "Puntos",
+    "output": ""
+  },
+  {
+    "input": "30",
+    "output": ""
+  },
+  {
+    "input": "20",
+    "output": ""
+  },
+  {
+    "input": "10",
+    "output": ""
+  },
+  {
+    "input": "60",
+    "output": ""
+  },
+  {
+    "input": "Puntos extra",
+    "output": ""
+  },
+  {
+    "input": "0",
+    "output": ""
+  },
+  {
+    "input": "Puntos obtenidos",
+    "output": ""
+  },
+  {
+    "input": "1. De los siguientes límites indique el tipo de forma indeterminada, y resuelva según el método solicitado:",
+    "output": ""
+  },
+  {
+    "input": "(a) (10 puntos) Factorización",
+    "output": ""
+  },
+  {
+    "input": "lim",
+    "output": ""
+  },
+  {
+    "input": "x→2",
+    "output": ""
+  },
+  {
+    "input": "x2 −4",
+    "output": ""
+  },
+  {
+    "input": "x −2",
+    "output": ""
+  },
+  {
+    "input": "Respuesta",
+    "output": ""
+  },
+  {
+    "input": "Primero confirmamos que es una forma indeterminada. Evaluamos el numerador y el denominador",
+    "output": ""
+  },
+  {
+    "input": "en x = 2 y se configura un 0",
+    "output": ""
+  },
+  {
+    "input": "0. Una forma indeterminada.",
+    "output": ""
+  },
+  {
+    "input": "Factorizamos el numerador",
+    "output": ""
+  },
+  {
+    "input": "x −2 = (x −2)(x + 2)",
+    "output": ""
+  },
+  {
+    "input": "(x −2)(x + 2)",
+    "output": ""
+  },
+  {
+    "input": "Suprimimos los términos comunes entre numerador y denominador.",
+    "output": ""
+  },
+  {
+    "input": "XXXX",
+    "output": ""
+  },
+  {
+    "input": "XXX",
+    "output": ""
+  },
+  {
+    "input": "= x + 2 :",
+    "output": ""
+  },
+  {
+    "input": "x→2(x + 2)",
+    "output": ""
+  },
+  {
+    "input": "El límite de un polinomio en un punto es sólo su valor allí.",
+    "output": ""
+  },
+  {
+    "input": "Dado que x + 2 es un polinomio, en x = 2, limx→2(x + 2) es igual al valor de x + 2 en x = 2 :",
+    "output": ""
+  },
+  {
+    "input": "Finalmente:",
+    "output": ""
+  },
+  {
+    "input": "x −2 = 4",
+    "output": ""
+  },
+  {
+    "input": "(b) (10 puntos) Conjugados",
+    "output": ""
+  },
+  {
+    "input": "x→0",
+    "output": ""
+  },
+  {
+    "input": "x",
+    "output": ""
+  },
+  {
+    "input": "1 −√1 −x",
+    "output": ""
+  },
+  {
+    "input": "en x = 0 y se configura un 0",
+    "output": ""
+  },
+  {
+    "input": "Racionalizamos la expresión.",
+    "output": ""
+  },
+  {
+    "input": "1 −√−x + 1 =",
+    "output": ""
+  },
+  {
+    "input": "1 −√−x + 1",
+    "output": ""
+  },
+  {
+    "input": "(1 + √−x + 1)",
+    "output": ""
+  },
+  {
+    "input": "= x(1 + √−x + 1)",
+    "output": ""
+  },
+  {
+    "input": "12 −(√−x + 1)2 = x(1 + √−x + 1)",
+    "output": ""
+  },
+  {
+    "input": "1 −(−x + 1)",
+    "output": ""
+  },
+  {
+    "input": "= Ax(1 + √−x + 1)",
+    "output": ""
+  },
+  {
+    "input": "Ax",
+    "output": ""
+  },
+  {
+    "input": "=",
+    "output": ""
+  },
+  {
+    "input": "√",
+    "output": ""
+  },
+  {
+    "input": "−x + 1 + 1 :",
+    "output": ""
+  },
+  {
+    "input": "x→0(",
+    "output": ""
+  },
+  {
+    "input": "−x + 1 + 1)",
+    "output": ""
+  },
+  {
+    "input": "Dado que √−x + 1 + 1 es continuo en x = 0, limx→0(√−x + 1 + 1) es igual al valor de √−x + 1 + 1",
+    "output": ""
+  },
+  {
+    "input": "en x = 0 : Respuesta:",
+    "output": ""
+  },
+  {
+    "input": "1 −√1 −x = 2",
+    "output": ""
+  },
+  {
+    "input": "Page 2",
+    "output": ""
+  },
+  {
+    "input": "(c) (10 puntos) L‘Hôpital",
+    "output": ""
+  },
+  {
+    "input": "x→4",
+    "output": ""
+  },
+  {
+    "input": "\u0012x3 −64",
+    "output": ""
+  },
+  {
+    "input": "x2 −16",
+    "output": ""
+  },
+  {
+    "input": "\u0013",
+    "output": ""
+  },
+  {
+    "input": "Primero confirmamos que es una forma indeterminada. Evaluamos el numerador y el denominador en",
+    "output": ""
+  },
+  {
+    "input": "x = 4 y se configura un 0",
+    "output": ""
+  },
+  {
+    "input": "Por lo tanto podemos aplicar L‘Hôpital. Aplicamos la derivada al numerador y denominador",
+    "output": ""
+  },
+  {
+    "input": "(x3 −64)′",
+    "output": ""
+  },
+  {
+    "input": "(x2 −16)′ = 3x2",
+    "output": ""
+  },
+  {
+    "input": "2x = 3x",
+    "output": ""
+  },
+  {
+    "input": "Si evaluamos en el punto de interés x = 4 resulta que",
+    "output": ""
+  },
+  {
+    "input": "= 3 · 4",
+    "output": ""
+  },
+  {
+    "input": "= 6",
+    "output": ""
+  },
+  {
+    "input": "2. Derive las siguientes funciones",
+    "output": ""
+  },
+  {
+    "input": "(a) (10 puntos) f(x) = x2 + x + 3",
+    "output": ""
+  },
+  {
+    "input": "Respuesta:",
+    "output": ""
+  },
+  {
+    "input": "Regla: La derivada de una suma es la suma de las derivadas.",
+    "output": ""
+  },
+  {
+    "input": "f ′(x) = (x2 + x + 3)′ = 2x + 1",
+    "output": ""
+  },
+  {
+    "input": "(b) (10 puntos) g(x) = x ln(x)",
+    "output": ""
+  },
+  {
+    "input": "Regla del producto (f · g)′ = f ′g + fg′",
+    "output": ""
+  },
+  {
+    "input": "g′(x) = (x · ln(x))′",
+    "output": ""
+  },
+  {
+    "input": "= (x)′ ln(x) + x(ln(x))′ = 1 ln(x) + x 1",
+    "output": ""
+  },
+  {
+    "input": "= ln(x) + 1",
+    "output": ""
+  },
+  {
+    "input": "(c) (10 puntos extra) y(x) = e4x+1",
+    "output": ""
+  },
+  {
+    "input": "Page 3",
+    "output": ""
+  },
+  {
+    "input": "3. Dada la siguiente función",
+    "output": ""
+  },
+  {
+    "input": "f(x) = x2 en el punto donde x = 2.",
+    "output": ""
+  },
+  {
+    "input": "(a) (5 puntos) Encuentra la ecuación de la recta tangente a la curva f(x) en el punto que se indica.",
+    "output": ""
+  },
+  {
+    "input": "Usaremos la siguiente ecuación para encontrar la ecuación de la recta tangente:",
+    "output": ""
+  },
+  {
+    "input": "(y −f(a)) = f ′(a)(x −a)",
+    "output": ""
+  },
+  {
+    "input": "Donde a = 2 el punto de interés, f(2) la función evaluada en el punto de interés y f ′(2) la derivada",
+    "output": ""
+  },
+  {
+    "input": "de f(x) evaluada en el punto de interés. Entonces",
+    "output": ""
+  },
+  {
+    "input": "a = 2",
+    "output": ""
+  },
+  {
+    "input": "f(2) = 22 = 4",
+    "output": ""
+  },
+  {
+    "input": "f ′(x) = 2 · x",
+    "output": ""
+  },
+  {
+    "input": "f ′(2) = 2 · 2 = 4",
+    "output": ""
+  },
+  {
+    "input": "Ahora, reemplazamos en la ecuación de la recta",
+    "output": ""
+  },
+  {
+    "input": "(y −4) = 4(x −2)",
+    "output": ""
+  },
+  {
+    "input": "y −4 = 4x −8",
+    "output": ""
+  },
+  {
+    "input": "y = 4x −8 + 4",
+    "output": ""
+  },
+  {
+    "input": "y = 4x −4",
+    "output": ""
+  },
+  {
+    "input": "(b) (5 puntos) Grafique la curva f(x) con la recta tangente en el punto x = 2.",
+    "output": ""
+  },
+  {
+    "input": "Page 4",
+    "output": ""
+  }
 ]
