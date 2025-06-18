@@ -64,3 +64,5 @@ Fecha,Expresión,Tipo de operación,Resultado
 2025-06-17 01:31:06,e**x * cos(x),integral,sqrt(2)*exp(x)*sin(x + pi/4)/2
 2025-06-17 01:31:48,sin(x)/x x 0,limite,0
 2025-06-17 01:33:33,tan(x) + x**3/4,derivada,3*x**2/4 + cos(x)**(-2)
+2025-06-17 21:14:36,x**3 + 2*x,derivada,3*x**2 + 2
+2025-06-17 21:14:53,e**x * cos(x),integral,sqrt(2)*exp(x)*sin(x + pi/4)/2

@@ -12,6 +12,7 @@ import csv
 import os
 from datetime import datetime
 import json
+import pandas as pd
 
 class MathAIChatbot:
     def __init__(self):
@@ -54,12 +55,15 @@ class MathAIChatbot:
             return False
 
     def get_top_queries_markdown(self):
-        top = self.usage_counter.most_common(5)
-        if not top:
-            return "📉 No hay consultas registradas aún."
-        return "### 📊 Ejercicios más consultados:\n" + "\n".join(
-            [f"- `{expr}` ({count} veces)" for expr, count in top]
-        )
+        try:
+            df = pd.read_csv('historial_consultas.csv')
+            top_expresiones = df['Expresión'].value_counts().head(5)
+            markdown = "### Ejercicios más consultados:\n"
+            for idx, (expresion, count) in enumerate(top_expresiones.items(), 1):
+                markdown += f"{idx}. {expresion} ({count} consultas)\n"
+            return markdown
+        except Exception as e:
+            return "No hay datos de ejercicios consultados aún."
 
     def buscar_referencias(self, pasos_texto: str) -> str:
         if not os.path.exists(self.referencias_path):

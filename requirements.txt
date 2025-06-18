@@ -1,5 +1,10 @@
+PyMuPDF==23.5.0
+gradio==4.28.1
+ipython==8.22.2
+matplotlib==3.8.3
+numpy==1.26.4
+pandas==2.2.1
+pillow==10.2.0
 sympy==1.12
-gradio==5.32.0
-transformers==4.52.4
-torch==2.6.0
-numpy==2.2.6
+torch==2.2.1
+transformers==4.37.2
